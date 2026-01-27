@@ -16,7 +16,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const path = '.github/CODEOWNERS';
+            const path = 'CODEOWNERS';
             
             if (!fs.existsSync(path)) {
               core.setFailed("Không tìm thấy file CODEOWNERS tại .github/CODEOWNERS");
