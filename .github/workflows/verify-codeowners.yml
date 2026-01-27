@@ -1,0 +1,66 @@
+name: Verify Permissions by CODEOWNERS
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-permissions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate Changes against CODEOWNERS
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = '.github/CODEOWNERS';
+            
+            if (!fs.existsSync(path)) {
+              core.setFailed("Không tìm thấy file CODEOWNERS tại .github/CODEOWNERS");
+              return;
+            }
+
+            const codeownersContent = fs.readFileSync(path, 'utf8');
+            const user = context.actor;
+            const userHandle = `@${user}`;
+
+            // 1. Lấy danh sách các folder mà user được phép sửa từ CODEOWNERS
+            const allowedPaths = codeownersContent
+              .split('\n')
+              .filter(line => line.trim() && !line.startsWith('#'))
+              .filter(line => line.includes(userHandle))
+              .map(line => line.split(/\s+/)[0].replace(/^\//, '')); // Xóa dấu / ở đầu
+
+            console.log(`User ${userHandle} có quyền trên các đường dẫn:`, allowedPaths);
+
+            // 2. Lấy danh sách file thay đổi trong PR
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const changedFiles = files.map(f => f.filename);
+            let forbiddenFiles = [];
+
+            // 3. Kiểm tra từng file
+            for (const file of changedFiles) {
+              // Nếu user là chủ sở hữu của "*" (quyền root/global) thì bỏ qua kiểm tra
+              const hasGlobalAccess = allowedPaths.includes('*');
+              if (hasGlobalAccess) break;
+
+              const isAllowed = allowedPaths.some(p => file.startsWith(p));
+              if (!isAllowed) {
+                forbiddenFiles.push(file);
+              }
+            }
+
+            // 4. Kết luận
+            if (forbiddenFiles.length > 0) {
+              core.setFailed(`❌ Truy cập bị từ chối! User ${userHandle} không có quyền sửa các file/folder sau: \n- ${forbiddenFiles.join('\n- ')} \n\nVui lòng chỉ sửa các folder được quy định trong CODEOWNERS.`);
+            } else {
+              console.log("✅ Tất cả thay đổi đều hợp lệ.");
+            }
