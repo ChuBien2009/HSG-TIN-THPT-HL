@@ -27,7 +27,7 @@ jobs:
             const user = context.actor;
             const userHandle = `@${user}`;
 
-            // 1. Lấy danh sách các folder mà user được phép sửa từ CODEOWNERS
+            // 1. Lấy danh sách các folder mà user được phép change từ CODEOWNERS
             const allowedPaths = codeownersContent
               .split('\n')
               .filter(line => line.trim() && !line.startsWith('#'))
