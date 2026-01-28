@@ -41,4 +41,6 @@ Follow this workflow when contributing code:
   - Chu Van Bien (2009)
   - Bui Dinh Trung (2009)
   - Vu Huy Long (2009)
-  - 
+  - Nguyen Nhat Minh (2010)
+  - Tran Dang Khoi (2010)
+  - Nguyen Viet Dung (2010)
