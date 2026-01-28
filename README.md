@@ -37,7 +37,17 @@ Follow this workflow when contributing code:
 5. **Merge after approval**: Once merged successfully, **delete the branch**.
 
 ## 😎 Contributors
+* 2024 - 2025:
+  - Nguyen Tung Duong (2008)
+  - Dam The Bao (2008)
+  - Phan Hoang Kien (2008)
+  - Hoang An Ky (2008)
+  
 * 2025 - 2026:
+  - Nguyen Tung Duong (2008)
+  - Dam The Bao (2008)
+  - Phan Hoang Kien (2008)
+  - Hoang An Ky (2008)
   - Chu Van Bien (2009)
   - Bui Dinh Trung (2009)
   - Vu Huy Long (2009)
