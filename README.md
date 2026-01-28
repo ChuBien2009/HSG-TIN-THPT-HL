@@ -16,9 +16,9 @@ This repository is a curated collection of algorithmic problem solutions written
 │   └── ...
 ├── contributor_3/
 │   └── ...
+├── CODEOWNERS
 └── README.md
 ```
-
 ### 🔐 CODEOWNERS
 * Each contributor **owns their own folder**.
 * Permissions are managed using **CODEOWNERS**.
@@ -37,3 +37,8 @@ Follow this workflow when contributing code:
 5. **Merge after approval**: Once merged successfully, **delete the branch**.
 
 ## 😎 Contributors
+* 2025 - 2026:
+  - Chu Van Bien (2009)
+  - Bui Dinh Trung (2009)
+  - Vu Huy Long (2009)
+  - 
